@@ -1,5 +1,5 @@
 // Az Én Napom — Service Worker
-const CACHE_NAME = 'adhd-naptar-v1';
+const CACHE_NAME = 'adhd-naptar-v9';
 const ASSETS = [
   './index.html',
   './manifest.json',
