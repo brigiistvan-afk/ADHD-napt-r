@@ -3010,6 +3010,35 @@ function saveSession(code) {
   } catch(e) {}
 }
 
+// XOR tartalék — ha Supabase nem érhető el
+const XOR_KEY = 'AranyHold2024NapomXOR';
+const FALLBACK_HASHES = [
+  '7725542940063a27','00205858291a2d2f','0a4a57563e1f595e','0b442a232102235f','7231295a4d0d3d38',
+  '0a412b22331b3d59','0f3132593502563f','0c252b594d7c2c27','003f525a281e5b59','742730343c042d2e',
+  '15202020211c3b27','073e2d204e7a5c35','1839255d3d103b3e','18222c362102282e','1b3c253b2f025822',
+  '7427202c3c0e275a','754b53364a7f2a59','052a22244e042c26','1331545b2b0f383e','1b23293c380b242f',
+  '0c4a373923042536','06333b363b002328','0627565a4e19382b','762b522f4d0e3827','1820572b2105382b',
+  '103a592a417e352a','032153362b0a5755','043e3723207c3b21','162325293219243c','194426233b7b243a',
+  '1037582f4b1d252a','073e245c331d5c36','0221583c4d0b2322','764b57233b7b3736','14202b3828022755',
+  '733459282b1d593f','1541263f3704355e','79472928320f5727','112b262a281d3927','7544335b3f715b5a',
+  '103c542c3d7f583d','1440373c341b2d3e','7728272a371a2b5f','02452f3e3b7f2e3c','0f45253640192426',
+  '052622572b185a5a','023c395b29052124','13242b58290d5759','162854594a1d363c','7446542b4e11272a',
+];
+
+function xorHash(code) {
+  let result = '';
+  const clean = code.trim().toUpperCase();
+  for (let i = 0; i < clean.length; i++) {
+    const xored = clean.charCodeAt(i) ^ XOR_KEY.charCodeAt(i % XOR_KEY.length);
+    result += xored.toString(16).padStart(2, '0');
+  }
+  return result;
+}
+
+function checkCodeLocally(code) {
+  return FALLBACK_HASHES.includes(xorHash(code));
+}
+
 // Supabase RPC hívás — TRUE/FALSE visszatérés
 async function checkCodeOnServer(code) {
   const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_napom_code`, {
@@ -3022,36 +3051,58 @@ async function checkCodeOnServer(code) {
     body: JSON.stringify({ input_code: code.trim().toUpperCase() })
   });
   if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-  return await resp.json(); // true vagy false
+  return await resp.json();
 }
 
-// Belépési kísérlet
+// Belépési kísérlet — Supabase + XOR tartalék
 async function tryUnlock() {
-  const input  = document.getElementById('lock-input');
-  const btn    = document.querySelector('.lock-btn');
-  const code   = (input?.value || '').trim().toUpperCase();
+  const input = document.getElementById('lock-input');
+  const btn   = document.querySelector('.lock-btn');
+  const code  = (input?.value || '').trim().toUpperCase();
 
   if (!code) { showLockError('Add meg a hozzáférési kódot!'); return; }
 
-  // Töltés állapot
   if (btn) { btn.textContent = '⏳ Ellenőrzés...'; btn.disabled = true; }
   showLockError('');
 
+  let valid = false;
+  let usedFallback = false;
+
   try {
-    const valid = await checkCodeOnServer(code);
-    if (valid === true) {
-      saveSession(code);
-      unlockApp();
+    // 1. Próba: Supabase (5 mp timeout)
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_napom_code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+      },
+      body: JSON.stringify({ input_code: code }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (resp.ok) {
+      valid = await resp.json();
     } else {
-      showLockError('Érvénytelen kód. Ellenőrizd és próbáld újra!');
-      if (input) { input.value = ''; input.focus(); }
+      throw new Error(`HTTP ${resp.status}`);
     }
   } catch(err) {
-    // Nincs internet vagy szerver hiba → session alapján döntünk
-    console.warn('Supabase hiba:', err);
-    showLockError('Nincs internetkapcsolat. Próbálj újra!');
-  } finally {
-    if (btn) { btn.textContent = 'Belépés →'; btn.disabled = false; }
+    // 2. Tartalék: helyi XOR ellenőrzés
+    console.warn('Supabase nem elérhető, tartalék ellenőrzés:', err.message);
+    valid = checkCodeLocally(code);
+    usedFallback = true;
+  }
+
+  if (btn) { btn.textContent = 'Belépés →'; btn.disabled = false; }
+
+  if (valid) {
+    saveSession(code);
+    unlockApp();
+  } else {
+    showLockError('Érvénytelen kód. Ellenőrizd és próbáld újra!');
+    if (input) { input.value = ''; input.focus(); }
   }
 }
 
