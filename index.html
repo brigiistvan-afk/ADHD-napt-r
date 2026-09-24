@@ -243,6 +243,11 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 .brain-dump-actions{display:flex;gap:8px;margin-top:12px;}
 .brain-dump-save{flex:1;padding:12px;border-radius:12px;border:none;background:#C96A3A;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;}
 .brain-dump-cancel{padding:12px 16px;border-radius:12px;border:1.5px solid #5A3E30;background:transparent;color:#B09A8A;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;}
+.voice-btn{width:100%;padding:14px;border-radius:12px;border:none;background:#3A2818;color:#F0C9A0;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.voice-btn:hover{background:#4A3828;}
+.voice-btn.recording{background:#C96A3A;color:white;animation:voicePulse 1s infinite;}
+@keyframes voicePulse{0%,100%{opacity:1}50%{opacity:.7}}
+.voice-status{font-size:12px;color:#7A6658;text-align:center;margin-bottom:8px;min-height:18px;}
 .dump-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:white;border-radius:10px;border:1px solid var(--peach);margin-bottom:7px;}
 .dump-item-text{flex:1;color:var(--dark);line-height:1.5;font-size:13px;}
 .dump-item-time{font-size:11px;color:var(--light);white-space:nowrap;margin-top:2px;}
@@ -493,7 +498,91 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 .full-day-btn:hover{background:var(--warm);color:var(--mid);}
 .full-day-content{display:none;}
 .full-day-content.open{display:block;}
-</style>
+
+/* ══ FÓKUSZ HANGOK ══ */
+.sound-section{background:linear-gradient(135deg,#F5F0FA,#EEF4FF);border-radius:14px;padding:18px;border:1.5px solid var(--lavender-light);margin-bottom:14px;}
+.sound-section h3{margin-bottom:12px;}
+.sound-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.sound-btn{padding:12px 6px;border-radius:12px;border:1.5px solid var(--lavender-light);background:white;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;text-align:center;line-height:1.4;}
+.sound-btn:hover{border-color:var(--lavender);background:#F5F0FA;}
+.sound-btn.playing{background:var(--lavender);color:white;border-color:var(--lavender);}
+.sound-btn .s-icon{font-size:22px;display:block;margin-bottom:3px;}
+.volume-row{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.volume-row label{font-size:12px;color:var(--mid);white-space:nowrap;}
+.volume-slider{flex:1;-webkit-appearance:none;height:5px;border-radius:3px;background:#DDD;outline:none;cursor:pointer;}
+.volume-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--lavender);cursor:pointer;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+
+/* ══ ÁTMENET-RIASZTÓ ══ */
+.alert-section{background:linear-gradient(135deg,#FFF8F0,#FFF0E8);border-radius:14px;padding:16px;border:1.5px solid var(--peach);margin-bottom:14px;}
+.alert-section h3{margin-bottom:10px;}
+.alert-options{display:flex;gap:7px;flex-wrap:wrap;}
+.alert-opt{padding:7px 14px;border-radius:20px;border:1.5px solid var(--peach);background:white;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
+.alert-opt.active{background:var(--terracotta);color:white;border-color:var(--terracotta);}
+.alert-banner{display:none;background:var(--terracotta);color:white;border-radius:12px;padding:12px 16px;text-align:center;margin-top:12px;font-size:14px;font-weight:600;animation:alertPulse 1s ease 3;}
+.alert-banner.show{display:block;}
+@keyframes alertPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+
+/* ══ STREAK SZÁMLÁLÓ ══ */
+.streak-card{background:linear-gradient(135deg,#FFF8F0,#FFF0E8);border:2px solid var(--peach);border-radius:16px;padding:18px;margin-bottom:16px;display:flex;align-items:center;gap:16px;}
+.streak-flame{font-size:42px;flex-shrink:0;}
+.streak-body{flex:1;}
+.streak-count{font-family:'Fraunces',serif;font-weight:300;font-size:36px;color:var(--terracotta);line-height:1;}
+.streak-label{font-size:13px;color:var(--mid);margin-top:2px;}
+.streak-best{font-size:11px;color:var(--light);margin-top:4px;}
+
+/* ══ HETI ÖSSZEFOGLALÓ ══ */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:400px){.summary-grid{grid-template-columns:repeat(2,1fr);}}
+.summary-stat{background:white;border-radius:14px;padding:16px 12px;text-align:center;border:1.5px solid var(--peach);}
+.summary-num{font-family:'Fraunces',serif;font-weight:300;font-size:32px;color:var(--terracotta);line-height:1;}
+.summary-lbl{font-size:11px;color:var(--mid);margin-top:4px;line-height:1.4;}
+.week-bar-chart{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px;}
+.week-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.week-bar{width:100%;background:var(--lavender-light);border-radius:4px 4px 0 0;transition:height .4s ease;min-height:4px;}
+.week-bar.today-bar{background:var(--terracotta);}
+.week-bar-label{font-size:10px;color:var(--light);}
+
+/* ══ NAPI NEHÉZSÉG ELŐREJELZŐ ══ */
+.forecast-card{background:linear-gradient(135deg,#F5F3FA,#EEF4FF);border-radius:14px;padding:18px;border:1.5px solid var(--lavender-light);margin-bottom:14px;}
+.forecast-card h3{margin-bottom:10px;color:var(--dark);font-size:14px;}
+.energy-btns{display:flex;gap:7px;margin-bottom:12px;}
+.energy-opt{width:36px;height:36px;border-radius:50%;border:2px solid var(--peach);background:white;font-size:16px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.energy-opt.active{border-color:var(--terracotta);background:#FFF0E8;}
+.condition-grid{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.cond-btn{padding:7px 13px;border-radius:20px;border:1.5px solid var(--peach);background:white;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
+.cond-btn.active{background:var(--lavender);color:white;border-color:var(--lavender);}
+.forecast-result{background:white;border-radius:10px;padding:13px;font-size:13px;color:var(--dark);line-height:1.6;border-left:3px solid var(--lavender);display:none;}
+.forecast-result.show{display:block;}
+
+/* ══ IDŐBECSLÉS EDZŐ ══ */
+.estimate-card{background:white;border-radius:14px;padding:18px;border:1.5px solid var(--peach);margin-bottom:12px;}
+.estimate-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+.estimate-input{flex:1;min-width:80px;padding:9px 12px;border:1.5px solid var(--peach);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--dark);background:var(--cream);outline:none;}
+.estimate-input:focus{border-color:var(--lavender);}
+.estimate-result{font-size:13px;padding:10px 13px;border-radius:10px;background:var(--cream);margin-top:6px;line-height:1.6;display:none;}
+.estimate-result.show{display:block;}
+.estimate-history{margin-top:12px;}
+.est-hist-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:8px;background:var(--cream);margin-bottom:5px;font-size:12px;color:var(--mid);}
+.est-acc{font-weight:600;padding:2px 8px;border-radius:10px;font-size:11px;}
+.est-good{background:#E8F5E8;color:var(--sage);}
+.est-ok{background:#FFF8ED;color:var(--gold);}
+.est-off{background:#FFE8E8;color:#C44;}
+
+/* ══ PUSH ÉRTESÍTÉSEK ══ */
+.push-card{background:white;border-radius:14px;padding:18px;border:1.5px solid var(--peach);margin-bottom:12px;}
+.push-status{font-size:13px;color:var(--mid);margin-bottom:12px;padding:10px 13px;background:var(--cream);border-radius:8px;}
+.push-toggle-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--peach);}
+.push-toggle-row:last-child{border-bottom:none;}
+.push-toggle-label{font-size:13px;color:var(--dark);}
+.push-toggle-sub{font-size:11px;color:var(--light);margin-top:2px;}
+.toggle-switch{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:#DDD;border-radius:12px;cursor:pointer;transition:.3s;}
+.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;}
+.toggle-switch input:checked + .toggle-slider{background:var(--sage);}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(20px);}
+
+/* ══ NAP-VÁLASZTÓ ══ */
 .day-selector{display:flex;gap:5px;margin-bottom:16px;background:var(--warm);border-radius:12px;padding:5px;}
 .day-sel-btn{flex:1;padding:8px 4px;border:none;border-radius:8px;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer;transition:all .15s;text-align:center;}
 .day-sel-btn.today{color:var(--terracotta);}
@@ -626,6 +715,7 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
   <button onclick="switchTab('het',this)">📅 Heti rotáció</button>
   <button onclick="switchTab('halogatas',this)">🚀 Indulás</button>
   <button onclick="switchTab('timer',this)">⏱ Időmérő</button>
+  <button onclick="switchTab('osszefoglaló',this)">📊 Összefoglaló</button>
   <button onclick="switchTab('erzesek',this)">💛 Érzések</button>
 </div>
 
@@ -930,10 +1020,12 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 <!-- IDŐMÉRŐ -->
 <div id="tab-timer" class="tab-content">
   <div class="hero"><h1>Idő-érzék edzés</h1><div class="hero-sub">Az ADHD-s agy nem érzi az időt — de megtanulható érezni</div></div>
+
   <div class="timer-section">
     <div class="timer-label" id="timer-mode-label">Válassz módot, majd indítsd el</div>
     <div class="timer-display" id="timer-display">25:00</div>
     <div class="timer-done-msg" id="timer-done-msg">🎉 Sikerült! Jó munkát!</div>
+    <div class="alert-banner" id="alert-banner">⏰ Hamarosan vége! Kezdj el lassítani...</div>
     <div class="timer-modes">
       <button class="mode-btn active" onclick="setMode(25,'🔥 Munka blokk — fókusz',this)">🔥 25p munka</button>
       <button class="mode-btn" onclick="setMode(5,'☕ Rövid szünet — mozogj!',this)">☕ 5p szünet</button>
@@ -947,13 +1039,140 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
       <button class="btn btn-danger" onclick="resetTimer()">↺ Reset</button>
     </div>
   </div>
+
+  <!-- ÁTMENET-RIASZTÓ -->
+  <div class="alert-section">
+    <h3>⏰ Átmenet-riasztó</h3>
+    <div style="font-size:13px;color:var(--mid);margin-bottom:10px;">Figyelmeztetés a blokk vége előtt</div>
+    <div class="alert-options">
+      <button class="alert-opt" onclick="setAlertTime(0,this)">🔕 Ki</button>
+      <button class="alert-opt active" onclick="setAlertTime(2,this)">2 perccel előtte</button>
+      <button class="alert-opt" onclick="setAlertTime(5,this)">5 perccel előtte</button>
+      <button class="alert-opt" onclick="setAlertTime(10,this)">10 perccel előtte</button>
+    </div>
+  </div>
+
+  <!-- FÓKUSZ HANGOK -->
+  <div class="sound-section">
+    <h3>🔊 Fókusz hangok</h3>
+    <div class="sound-grid">
+      <button class="sound-btn" onclick="playSound('white',this)"><span class="s-icon">📻</span>Fehér zaj</button>
+      <button class="sound-btn" onclick="playSound('brown',this)"><span class="s-icon">🌧</span>Eső / Víz</button>
+      <button class="sound-btn" onclick="playSound('pink',this)"><span class="s-icon">🌊</span>Tenger</button>
+      <button class="sound-btn" onclick="playSound('cafe',this)"><span class="s-icon">☕</span>Kávézó</button>
+      <button class="sound-btn" onclick="playSound('forest',this)"><span class="s-icon">🌿</span>Természet</button>
+      <button class="sound-btn" onclick="playSound('off',this)"><span class="s-icon">🔇</span>Kikapcs</button>
+    </div>
+    <div class="volume-row">
+      <label>🔉 Hangerő</label>
+      <input type="range" class="volume-slider" id="sound-volume" min="0" max="100" value="40" oninput="setSoundVolume(this.value)">
+      <label id="vol-label">40%</label>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-title">🕐 Az idő-érzék fejlesztéséről</div>
     <div class="two-col">
-      <div class="card"><h3>Időbecslés edző</h3><p>Mielőtt elkezdesz valamit, <strong>becsüld meg</strong> hány percig tart. Utána mérd le. Ez az egyetlen módja, hogy pontosabb legyen az időérzéked.</p></div>
+      <div class="card"><h3>Időbecslés edző</h3><p>Mielőtt elkezdesz valamit, <strong>becsüld meg</strong> hány percig tart. Utána mérd le.</p></div>
       <div class="card sage"><h3>Puffer-szabály</h3><p>Amire 30 percet becsülsz, adj <strong>40 percet.</strong> Az ADHD-s agy szinte mindig alábecsüli az időt.</p></div>
       <div class="card lavender"><h3>Átmenet-idő</h3><p>Feladatok között mindig adj <strong>5-10 perces puffert.</strong> Az ADHD-s agynak idő kell az újrainduláshoz.</p></div>
       <div class="card sky"><h3>Időmérő mint horgony</h3><p>A látható visszaszámláló <strong>külső időérzékként</strong> funkcionál — pótolja, amit belülről nehéz érezni.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ÖSSZEFOGLALÓ -->
+<div id="tab-osszefoglaló" class="tab-content">
+  <div class="hero"><h1>Összefoglaló</h1><div class="hero-sub">Amit elvégeztél — mert az ADHD-s agy sokszor elfelejti</div></div>
+
+  <!-- STREAK -->
+  <div class="streak-card">
+    <div class="streak-flame" id="streak-flame">🔥</div>
+    <div class="streak-body">
+      <div class="streak-count" id="streak-count">0</div>
+      <div class="streak-label" id="streak-label">nap egymás után</div>
+      <div class="streak-best" id="streak-best">Legjobb sorozat: 0 nap</div>
+    </div>
+  </div>
+
+  <!-- HETI ÖSSZEFOGLALÓ -->
+  <div class="section">
+    <div class="section-title">📊 Ez a hét</div>
+    <div class="summary-grid" id="summary-grid">
+      <div class="summary-stat"><div class="summary-num" id="stat-blocks">0</div><div class="summary-lbl">elvégzett blokk</div></div>
+      <div class="summary-stat"><div class="summary-num" id="stat-tasks">0</div><div class="summary-lbl">kész feladat</div></div>
+      <div class="summary-stat"><div class="summary-num" id="stat-dumps">0</div><div class="summary-lbl">elkapott gondolat</div></div>
+    </div>
+    <div class="card" style="margin-bottom:12px;">
+      <h3>Elvégzett blokkok — elmúlt 7 nap</h3>
+      <div class="week-bar-chart" id="week-bar-chart"></div>
+    </div>
+    <div class="notice" id="weekly-praise" style="border-left-color:var(--sage);background:#F8FBF8;"></div>
+  </div>
+
+  <!-- NAPI NEHÉZSÉG ELŐREJELZŐ -->
+  <div class="section">
+    <div class="section-title">🌡️ Ma milyen nap lesz?</div>
+    <div class="forecast-card">
+      <h3>Energia szint reggel</h3>
+      <div class="energy-btns" id="forecast-energy">
+        <button class="energy-opt" data-val="1" onclick="setForecastEnergy(1,this)">😴</button>
+        <button class="energy-opt" data-val="2" onclick="setForecastEnergy(2,this)">😐</button>
+        <button class="energy-opt active" data-val="3" onclick="setForecastEnergy(3,this)">🙂</button>
+        <button class="energy-opt" data-val="4" onclick="setForecastEnergy(4,this)">😊</button>
+        <button class="energy-opt" data-val="5" onclick="setForecastEnergy(5,this)">⚡</button>
+      </div>
+      <h3 style="margin-bottom:8px;">Különleges körülmény?</h3>
+      <div class="condition-grid">
+        <button class="cond-btn" onclick="toggleCondition('alvas',this)">😴 Rosszul aludtam</button>
+        <button class="cond-btn" onclick="toggleCondition('gyerek',this)">🧒 Gyerek beteg</button>
+        <button class="cond-btn" onclick="toggleCondition('meeting',this)">📅 Sok meeting</button>
+        <button class="cond-btn" onclick="toggleCondition('stressz',this)">😰 Stresszes nap</button>
+        <button class="cond-btn" onclick="toggleCondition('jó',this)">✨ Minden rendben</button>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="generateForecast()" style="width:100%;">🔮 Nap előrejelzése</button>
+      <div class="forecast-result" id="forecast-result"></div>
+    </div>
+  </div>
+
+  <!-- IDŐBECSLÉS EDZŐ -->
+  <div class="section">
+    <div class="section-title">⏱ Időbecslés edző</div>
+    <div class="notice">Becsüld meg előre hány perc, majd mérd le. Hetente látod mennyit fejlődött az időérzéked.</div>
+    <div class="estimate-card">
+      <div style="font-size:13px;color:var(--mid);margin-bottom:10px;">Mit fogsz csinálni?</div>
+      <input class="estimate-input" id="est-task" placeholder="pl. emailek megírása...">
+      <div class="estimate-row" style="margin-top:10px;">
+        <div>
+          <div style="font-size:11px;color:var(--light);margin-bottom:4px;">Becsült idő (perc)</div>
+          <input class="estimate-input" id="est-guess" type="number" min="1" max="240" placeholder="30">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="startEstimate()" style="margin-top:16px;">▶ Start</button>
+        <button class="btn btn-secondary btn-sm" onclick="stopEstimate()" style="margin-top:16px;" id="est-stop-btn" disabled>⏹ Kész</button>
+      </div>
+      <div class="estimate-result" id="est-result"></div>
+      <div class="estimate-history" id="est-history"></div>
+    </div>
+  </div>
+
+  <!-- PUSH ÉRTESÍTÉSEK -->
+  <div class="section">
+    <div class="section-title">🔔 Értesítések</div>
+    <div class="push-card">
+      <div class="push-status" id="push-status">Az értesítések engedélyezéséhez kattints az alábbi gombra.</div>
+      <button class="btn btn-primary btn-sm" onclick="requestPushPermission()" id="push-enable-btn" style="width:100%;margin-bottom:14px;">🔔 Értesítések engedélyezése</button>
+      <div class="push-toggle-row">
+        <div><div class="push-toggle-label">⏰ Átmenet-riasztó</div><div class="push-toggle-sub">Blokk vége előtt emlékeztet</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="notif-transition" checked onchange="saveNotifSettings()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="push-toggle-row">
+        <div><div class="push-toggle-label">📌 Közelgő feladatok</div><div class="push-toggle-sub">Napi 1x reggel 8:00-kor</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="notif-tasks" onchange="saveNotifSettings()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="push-toggle-row">
+        <div><div class="push-toggle-label">🌙 Esti lezárás</div><div class="push-toggle-sub">Este 21:00-kor emlékeztet</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="notif-evening" onchange="saveNotifSettings()"><span class="toggle-slider"></span></label>
+      </div>
     </div>
   </div>
 </div>
@@ -1057,7 +1276,9 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 <div class="brain-dump-overlay" id="brain-dump-overlay">
   <div class="brain-dump-box">
     <h2>💭 Elkapom a gondolatot</h2>
-    <p>Írd le gyorsan — nem kell gondolkodni rajta most.</p>
+    <p>Írd le vagy diktáld — nem kell gondolkodni rajta most.</p>
+    <button class="voice-btn" id="voice-btn" onclick="startDictation()">🎤 Diktálás indítása</button>
+    <div class="voice-status" id="voice-status"></div>
     <textarea class="brain-dump-textarea" id="brain-dump-input"
       placeholder="pl. megkérdezni az orvostól... / befizetni a villanyát..."
       onkeydown="if(event.key==='Enter'&&event.ctrlKey)saveBrainDump()"></textarea>
@@ -2014,6 +2235,7 @@ function switchTab(name, btn) {
   if (name === 'halogatas') renderBrainDumpList();
   if (name === 'naptar') renderCalendar();
   if (name === 'feladatok') { renderTaskList(); renderWeekView(); }
+  if (name === 'osszefoglaló') { renderStreak(); renderWeeklySummary(); renderEstHistory(); loadNotifSettings(); }
 }
 
 function selectMood(btn, tip) {
@@ -2041,24 +2263,221 @@ function updateEnergy(val) {
   document.getElementById('energy-text').textContent = energyTexts[val];
 }
 
+// ═══════════════════════════════════════
+// FÓKUSZ HANGOK — Web Audio API
+// ═══════════════════════════════════════
+let audioCtx = null;
+let soundNodes = [];
+let soundGain = null;
+let currentSound = null;
+let soundVolume = 0.4;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function stopAllSounds() {
+  soundNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+  soundNodes = [];
+  if (soundGain) { try { soundGain.disconnect(); } catch(e) {} soundGain = null; }
+}
+
+function createNoiseBuffer(ctx, type) {
+  const bufSize = ctx.sampleRate * 4;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  if (type === 'white') {
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+  } else if (type === 'brown') {
+    let last = 0;
+    for (let i = 0; i < bufSize; i++) {
+      const w = Math.random() * 2 - 1;
+      last = (last + 0.02 * w) / 1.02;
+      data[i] = last * 3.5;
+    }
+  } else if (type === 'pink') {
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for (let i = 0; i < bufSize; i++) {
+      const w = Math.random() * 2 - 1;
+      b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+      b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+      b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+      data[i] = (b0+b1+b2+b3+b4+b5+b6+w*0.5362) * 0.11;
+      b6 = w * 0.115926;
+    }
+  } else if (type === 'cafe') {
+    // Kávézó: pink zaj + modulált amplitúdó
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for (let i = 0; i < bufSize; i++) {
+      const w = Math.random() * 2 - 1;
+      b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+      b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+      b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+      const pink = (b0+b1+b2+b3+b4+b5+b6+w*0.5362) * 0.11;
+      b6 = w * 0.115926;
+      // Moduláció — "zsongás" érzet
+      const mod = 0.5 + 0.5 * Math.sin(2 * Math.PI * 0.3 * i / ctx.sampleRate);
+      data[i] = pink * (0.7 + 0.3 * mod);
+    }
+  } else if (type === 'forest') {
+    // Természet: brown + high pitch flutter
+    let last = 0;
+    for (let i = 0; i < bufSize; i++) {
+      const w = Math.random() * 2 - 1;
+      last = (last + 0.015 * w) / 1.015;
+      const highFreq = (Math.random() * 2 - 1) * 0.04 * Math.abs(Math.sin(i * 0.001));
+      data[i] = last * 2.5 + highFreq;
+    }
+  }
+  return buf;
+}
+
+function playSound(type, btn) {
+  // Gomb állapot
+  document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('playing'));
+
+  if (type === 'off' || type === currentSound) {
+    stopAllSounds();
+    currentSound = null;
+    return;
+  }
+
+  if (btn) btn.classList.add('playing');
+  currentSound = type;
+
+  try {
+    const ctx = getAudioCtx();
+    stopAllSounds();
+
+    soundGain = ctx.createGain();
+    soundGain.gain.value = soundVolume;
+    soundGain.connect(ctx.destination);
+
+    const buf = createNoiseBuffer(ctx, type);
+    const source = ctx.createBufferSource();
+    source.buffer = buf;
+    source.loop = true;
+
+    // Szűrő a hanghoz
+    const filter = ctx.createBiquadFilter();
+    if (type === 'brown' || type === 'forest') {
+      filter.type = 'lowpass';
+      filter.frequency.value = 800;
+    } else if (type === 'cafe') {
+      filter.type = 'bandpass';
+      filter.frequency.value = 1200;
+      filter.Q.value = 0.5;
+    } else {
+      filter.type = 'allpass';
+    }
+
+    source.connect(filter);
+    filter.connect(soundGain);
+    source.start();
+    soundNodes = [source];
+  } catch(e) {
+    showToast('⚠️ Hang nem elérhető ezen az eszközön');
+    currentSound = null;
+  }
+}
+
+function setSoundVolume(val) {
+  soundVolume = val / 100;
+  if (soundGain) soundGain.gain.value = soundVolume;
+  const lbl = document.getElementById('vol-label');
+  if (lbl) lbl.textContent = val + '%';
+}
+
+// ═══════════════════════════════════════
+// ÁTMENET-RIASZTÓ
+// ═══════════════════════════════════════
+let transitionAlertMins = 2; // alapértelmezett
+let alertFired = false;
+
+function setAlertTime(mins, btn) {
+  transitionAlertMins = mins;
+  alertFired = false;
+  document.querySelectorAll('.alert-opt').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  try { localStorage.setItem('adhd_alert_mins', mins); } catch(e) {}
+}
+
+function loadAlertSetting() {
+  try {
+    const saved = localStorage.getItem('adhd_alert_mins');
+    if (saved !== null) {
+      transitionAlertMins = parseInt(saved);
+      document.querySelectorAll('.alert-opt').forEach(btn => {
+        const m = parseInt(btn.textContent);
+        if ((!isNaN(m) && m === transitionAlertMins) || (transitionAlertMins === 0 && btn.textContent.includes('Ki'))) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+  } catch(e) {}
+}
+
+function checkTransitionAlert() {
+  if (transitionAlertMins === 0 || alertFired) return;
+  const alertAt = transitionAlertMins * 60;
+  if (remaining === alertAt) {
+    alertFired = true;
+    // Vizuális jelzés
+    const banner = document.getElementById('alert-banner');
+    if (banner) {
+      banner.textContent = `⏰ ${transitionAlertMins} perc múlva vége! Kezdj el lassítani...`;
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 8000);
+    }
+    // Hang — háromszori szelíd csipogás
+    try {
+      const ctx = getAudioCtx();
+      [0, 0.5, 1].forEach(delay => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.connect(g); g.connect(ctx.destination);
+        osc.frequency.value = 528; // "fókusz" frekvencia
+        osc.type = 'sine';
+        g.gain.setValueAtTime(0, ctx.currentTime + delay);
+        g.gain.linearRampToValueAtTime(0.2, ctx.currentTime + delay + 0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.6);
+        osc.start(ctx.currentTime + delay);
+        osc.stop(ctx.currentTime + delay + 0.6);
+      });
+    } catch(e) {}
+    // Rezgés ha elérhető
+    try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch(e) {}
+  }
+}
 // TIMER
 let timerInterval = null;
 let totalSeconds = 25 * 60;
 let remaining = 25 * 60;
 let running = false;
+
 function setMode(min, label, btn) {
   pauseTimer();
   totalSeconds = min*60; remaining = totalSeconds;
+  alertFired = false;
   document.getElementById('timer-display').textContent = formatTime(remaining);
   document.getElementById('timer-display').classList.remove('urgent');
   document.getElementById('timer-mode-label').textContent = label;
   document.getElementById('timer-done-msg').classList.remove('show');
+  const banner = document.getElementById('alert-banner');
+  if (banner) banner.classList.remove('show');
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 function formatTime(s) { return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 function startTimer() {
   if (running) return; running = true;
+  alertFired = false;
   document.getElementById('timer-done-msg').classList.remove('show');
   timerInterval = setInterval(() => {
     if (remaining <= 0) {
@@ -2067,7 +2486,7 @@ function startTimer() {
       document.getElementById('timer-display').classList.remove('urgent');
       document.getElementById('timer-done-msg').classList.add('show');
       try {
-        const ctx = new (window.AudioContext||window.webkitAudioContext)();
+        const ctx = getAudioCtx();
         [0,.3,.6].forEach(d => {
           const o=ctx.createOscillator(), g=ctx.createGain();
           o.connect(g); g.connect(ctx.destination);
@@ -2076,15 +2495,24 @@ function startTimer() {
           o.start(ctx.currentTime+d); o.stop(ctx.currentTime+d+.4);
         });
       } catch(e) {}
+      try { navigator.vibrate && navigator.vibrate([300,100,300,100,300]); } catch(e) {}
       return;
     }
     remaining--;
     document.getElementById('timer-display').textContent = formatTime(remaining);
-    if (remaining<=60) document.getElementById('timer-display').classList.add('urgent');
+    if (remaining <= 60) document.getElementById('timer-display').classList.add('urgent');
+    checkTransitionAlert();
   }, 1000);
 }
 function pauseTimer() { clearInterval(timerInterval); running=false; }
-function resetTimer() { pauseTimer(); remaining=totalSeconds; document.getElementById('timer-display').textContent=formatTime(remaining); document.getElementById('timer-display').classList.remove('urgent'); document.getElementById('timer-done-msg').classList.remove('show'); }
+function resetTimer() {
+  pauseTimer(); remaining=totalSeconds; alertFired=false;
+  document.getElementById('timer-display').textContent=formatTime(remaining);
+  document.getElementById('timer-display').classList.remove('urgent');
+  document.getElementById('timer-done-msg').classList.remove('show');
+  const banner = document.getElementById('alert-banner');
+  if (banner) banner.classList.remove('show');
+}
 
 // ═══════════════════════════════════════
 // ÚJ CHAOS MÓD — FELADAT ADAGOLÓ ENGINE
@@ -2252,14 +2680,98 @@ function saveBrainDumps(data) {
   try { localStorage.setItem('adhd_braindump_v1', JSON.stringify(data)); } catch(e) {}
 }
 
+// ═══════════════════════════════════════
+// HANGFELISMERÉS — DIKTÁLÁS
+// ═══════════════════════════════════════
+let recognition = null;
+let isRecording = false;
+
+function startDictation() {
+  const btn    = document.getElementById('voice-btn');
+  const status = document.getElementById('voice-status');
+  const input  = document.getElementById('brain-dump-input');
+
+  // Ha már felvesz, leállítjuk
+  if (isRecording) {
+    stopDictation();
+    return;
+  }
+
+  // Böngésző támogatás ellenőrzése
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    if (status) status.textContent = '⚠️ Ez a böngésző nem támogatja a hangfelismerést. Próbáld Chrome-ban.';
+    return;
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang = 'hu-HU';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+
+  recognition.onstart = () => {
+    isRecording = true;
+    if (btn) { btn.textContent = '⏹ Megállítás'; btn.classList.add('recording'); }
+    if (status) status.textContent = '🎤 Hallgatlak... beszélj!';
+  };
+
+  recognition.onresult = (event) => {
+    let interim = '';
+    let final = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) final += transcript;
+      else interim += transcript;
+    }
+    if (input) {
+      // Hozzáfűzzük a már meglévő szöveghez
+      const existing = input.value.trim();
+      if (final) {
+        input.value = existing ? existing + ' ' + final : final;
+        if (status) status.textContent = '✓ Elkapva! Folytathatsz vagy mentheted.';
+      } else if (interim) {
+        if (status) status.textContent = '🎤 ' + interim + '...';
+      }
+    }
+  };
+
+  recognition.onerror = (event) => {
+    stopDictation();
+    const msgs = {
+      'not-allowed': '⚠️ Mikrofon hozzáférés megtagadva. Engedélyezd a böngészőbeállításokban.',
+      'no-speech':   '⚠️ Nem hallottam semmit. Próbáld újra!',
+      'network':     '⚠️ Hálózati hiba. Próbáld újra!',
+    };
+    if (status) status.textContent = msgs[event.error] || '⚠️ Hiba: ' + event.error;
+  };
+
+  recognition.onend = () => {
+    stopDictation();
+  };
+
+  recognition.start();
+}
+
+function stopDictation() {
+  isRecording = false;
+  if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
+  const btn = document.getElementById('voice-btn');
+  if (btn) { btn.textContent = '🎤 Diktálás indítása'; btn.classList.remove('recording'); }
+}
+
 function openBrainDump() {
   const overlay = document.getElementById('brain-dump-overlay');
   const input   = document.getElementById('brain-dump-input');
+  const status  = document.getElementById('voice-status');
+  const btn     = document.getElementById('voice-btn');
   if (overlay) overlay.classList.add('open');
   if (input)   { input.value = ''; setTimeout(() => input.focus(), 200); }
+  if (status)  status.textContent = '';
+  if (btn)     { btn.textContent = '🎤 Diktálás indítása'; btn.classList.remove('recording'); }
 }
 
 function closeBrainDump() {
+  stopDictation();
   const overlay = document.getElementById('brain-dump-overlay');
   if (overlay) overlay.classList.remove('open');
 }
@@ -3193,6 +3705,219 @@ function initDayMode() {
 }
 
 // ═══════════════════════════════════════
+// STREAK SZÁMLÁLÓ
+// ═══════════════════════════════════════
+function getStreakData() {
+  try { return JSON.parse(localStorage.getItem('adhd_streak_v1') || '{"current":0,"best":0,"lastDate":"","history":{}}'); }
+  catch(e) { return {current:0,best:0,lastDate:'',history:{}}; }
+}
+function saveStreakData(d) { try { localStorage.setItem('adhd_streak_v1', JSON.stringify(d)); } catch(e) {} }
+
+function updateStreak() {
+  const today = todayStr();
+  const d = getStreakData();
+  if (d.lastDate === today) { renderStreak(); return; }
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+  const yd = yesterday.getFullYear()+'-'+String(yesterday.getMonth()+1).padStart(2,'0')+'-'+String(yesterday.getDate()).padStart(2,'0');
+  if (d.lastDate === yd) d.current++;
+  else d.current = 1;
+  d.best = Math.max(d.best, d.current);
+  d.lastDate = today;
+  const all = ['reggel','munka','delutan','este'].flatMap(s => state.slots[s]||[]);
+  const done = all.filter(s => state.done[s.id]).length;
+  d.history[today] = { blocks: done };
+  saveStreakData(d);
+  renderStreak();
+}
+
+function renderStreak() {
+  const d = getStreakData();
+  const ec = document.getElementById('streak-count');
+  const el = document.getElementById('streak-label');
+  const eb = document.getElementById('streak-best');
+  const ef = document.getElementById('streak-flame');
+  if (!ec) return;
+  ec.textContent = d.current;
+  el.textContent = d.current === 1 ? 'nap — ma kezdted!' : 'nap egymás után';
+  eb.textContent = `Legjobb sorozat: ${d.best} nap`;
+  ef.textContent = d.current >= 7 ? '🔥🔥' : d.current >= 3 ? '🔥' : '✨';
+}
+
+// ═══════════════════════════════════════
+// HETI ÖSSZEFOGLALÓ
+// ═══════════════════════════════════════
+function renderWeeklySummary() {
+  const d = getStreakData();
+  const tasks = getTasks();
+  const allBlocks = ['reggel','munka','delutan','este'].flatMap(s => state.slots[s]||[]);
+  const doneBlocks = allBlocks.filter(s => state.done[s.id]).length;
+  const doneTasks  = tasks.filter(t => t.done || t.archived).length;
+  const dumpsCount = getBrainDumps().length;
+  const sb = document.getElementById('stat-blocks');
+  const st = document.getElementById('stat-tasks');
+  const sd = document.getElementById('stat-dumps');
+  if (sb) sb.textContent = doneBlocks;
+  if (st) st.textContent = doneTasks;
+  if (sd) sd.textContent = dumpsCount;
+  const chart = document.getElementById('week-bar-chart');
+  if (chart) {
+    const dayNames = ['V','H','K','Sze','Cs','P','Szo'];
+    const days = [];
+    for (let i=6; i>=0; i--) {
+      const dd = new Date(); dd.setDate(dd.getDate()-i);
+      const ds = dd.getFullYear()+'-'+String(dd.getMonth()+1).padStart(2,'0')+'-'+String(dd.getDate()).padStart(2,'0');
+      const hist = d.history && d.history[ds] ? d.history[ds] : {blocks:0};
+      days.push({label:dayNames[dd.getDay()], val:hist.blocks||0, isToday:ds===todayStr()});
+    }
+    const maxVal = Math.max(...days.map(x=>x.val), 1);
+    chart.innerHTML = days.map(x=>`<div class="week-bar-col"><div class="week-bar ${x.isToday?'today-bar':''}" style="height:${Math.round((x.val/maxVal)*64)+4}px;"></div><div class="week-bar-label">${x.label}</div></div>`).join('');
+  }
+  const praise = document.getElementById('weekly-praise');
+  if (praise) {
+    const msgs = [[10,'🌟 Fantasztikus hét! 10+ blokk elvégezve.'],[5,'✨ Szép hét! Több mint 5 blokk kész.'],[2,'💙 Megcsináltad amit megcsináltál. Minden blokk számít.'],[0,'🌱 Minden nap új kezdet. Holnap egy blokk is siker.']];
+    const msg = msgs.find(m => doneBlocks >= m[0]);
+    if (msg) { praise.textContent = msg[1]; praise.style.display='block'; } else praise.style.display='none';
+  }
+}
+
+// ═══════════════════════════════════════
+// NAPI NEHÉZSÉG ELŐREJELZŐ
+// ═══════════════════════════════════════
+let forecastEnergy = 3;
+let forecastConditions = new Set();
+
+function setForecastEnergy(val, btn) {
+  forecastEnergy = val;
+  document.querySelectorAll('.energy-opt').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function toggleCondition(key, btn) {
+  if (forecastConditions.has(key)) { forecastConditions.delete(key); btn.classList.remove('active'); }
+  else { forecastConditions.add(key); btn.classList.add('active'); }
+}
+function generateForecast() {
+  const el = document.getElementById('forecast-result');
+  if (!el) return;
+  const conds = [...forecastConditions];
+  let score = forecastEnergy;
+  if (conds.some(c=>['alvas','gyerek','stressz'].includes(c))) score--;
+  if (conds.includes('meeting')) score--;
+  score = Math.max(1, Math.min(5, score));
+  const forecasts = {
+    1:{icon:'🛡️',title:'Védett nap',text:'Ma az energiád nagyon alacsony. Csak a létfontosságú teendők — gyerek, étkezés, egy dolog a munkából. Minden más várhat.'},
+    2:{icon:'🌱',title:'Kíméletes nap',text:'Nem a legjobb nap. 2-3 rövid blokk elvárható, de ne erőltesd a nehéz feladatokat.'},
+    3:{icon:'☀️',title:'Közepes nap',text:'Normál nap. Egy nehéz feladat reggel, a többit rutinok töltsék. Este feltöltődés.'},
+    4:{icon:'⚡',title:'Jó nap',text:'Jó energiával indulsz! A legnehezebb feladat elsőként reggel — használd ki ezt a napot.'},
+    5:{icon:'🚀',title:'Csúcsnap',text:'Kiváló nap — védd meg! Telefon le, értesítések ki, mélymunka mód. Nehéz döntések is mehetnek ma.'},
+  };
+  const f = forecasts[score];
+  el.innerHTML = `<strong>${f.icon} ${f.title}</strong><br>${f.text}`;
+  el.classList.add('show');
+}
+
+// ═══════════════════════════════════════
+// IDŐBECSLÉS EDZŐ
+// ═══════════════════════════════════════
+let estStartTime = null;
+
+function getEstHistory() { try { return JSON.parse(localStorage.getItem('adhd_estimates_v1')||'[]'); } catch(e) { return []; } }
+function saveEstHistory(h) { try { localStorage.setItem('adhd_estimates_v1', JSON.stringify(h.slice(-20))); } catch(e) {} }
+
+function startEstimate() {
+  const task  = document.getElementById('est-task')?.value.trim();
+  const guess = parseInt(document.getElementById('est-guess')?.value);
+  if (!task || !guess) { showToast('⚠️ Add meg a feladatot és a becslést!'); return; }
+  estStartTime = Date.now();
+  const stopBtn = document.getElementById('est-stop-btn');
+  if (stopBtn) stopBtn.disabled = false;
+  const result = document.getElementById('est-result');
+  if (result) { result.textContent = `⏱ Folyamatban: ${task} (becsült: ${guess} perc)`; result.classList.add('show'); }
+}
+function stopEstimate() {
+  if (!estStartTime) return;
+  const elapsed = Math.round((Date.now()-estStartTime)/60000);
+  const task    = document.getElementById('est-task')?.value.trim();
+  const guess   = parseInt(document.getElementById('est-guess')?.value)||1;
+  estStartTime  = null;
+  const stopBtn = document.getElementById('est-stop-btn');
+  if (stopBtn) stopBtn.disabled = true;
+  const diff = elapsed-guess;
+  const accuracy = Math.abs(diff)<=5?'good':Math.abs(diff)<=15?'ok':'off';
+  const msg = accuracy==='good'?'🎯 Pontos becslés!':diff>0?`⏰ ${diff} perccel tovább tartott`:`⚡ ${Math.abs(diff)} perccel rövidebb volt`;
+  const result = document.getElementById('est-result');
+  if (result) result.innerHTML = `<strong>${msg}</strong><br>Becsült: ${guess}p · Valós: ${elapsed}p`;
+  const hist = getEstHistory();
+  hist.unshift({task, guess, actual:elapsed, date:todayStr()});
+  saveEstHistory(hist);
+  renderEstHistory();
+}
+function renderEstHistory() {
+  const container = document.getElementById('est-history');
+  if (!container) return;
+  const hist = getEstHistory();
+  if (!hist.length) { container.innerHTML=''; return; }
+  container.innerHTML = `<div style="font-size:11px;color:var(--light);margin:10px 0 6px;text-transform:uppercase;letter-spacing:.06em;">Előzmények</div>`+
+    hist.slice(0,5).map(h=>{
+      const diff=h.actual-h.guess;
+      const acc=Math.abs(diff)<=5?'good':Math.abs(diff)<=15?'ok':'off';
+      const lbl=acc==='good'?'🎯':diff>0?`+${diff}p`:`${diff}p`;
+      return `<div class="est-hist-item"><span>${h.task}</span><span class="est-acc est-${acc}">${lbl}</span></div>`;
+    }).join('');
+}
+
+// ═══════════════════════════════════════
+// PUSH ÉRTESÍTÉSEK
+// ═══════════════════════════════════════
+function requestPushPermission() {
+  if (!('Notification' in window)) {
+    const s = document.getElementById('push-status');
+    if (s) s.textContent = '⚠️ Ez a böngésző nem támogatja az értesítéseket.';
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    const status = document.getElementById('push-status');
+    const btn    = document.getElementById('push-enable-btn');
+    if (perm === 'granted') {
+      if (status) status.textContent = '✅ Értesítések engedélyezve!';
+      if (btn) btn.style.display = 'none';
+      scheduleNotifications();
+      try { localStorage.setItem('adhd_push_v1','1'); } catch(e) {}
+    } else {
+      if (status) status.textContent = '❌ Értesítések megtagadva. Böngésző beállításokban engedélyezheted.';
+    }
+  });
+}
+function scheduleNotifications() {
+  const s = getNotifSettings();
+  if (s.tasks) {
+    const tasks = getTasks().filter(t=>!t.done&&!t.archived&&t.date&&t.date<=tomorrowStr());
+    if (tasks.length>0) {
+      const now=new Date(), target=new Date(); target.setHours(8,0,0,0);
+      if (target>now) setTimeout(()=>{ try{new Notification('📌 Az Én Napom',{body:`${tasks.length} közelgő feladat vár rád!`,icon:'icon-192.png'});}catch(e){} }, target-now);
+    }
+  }
+  if (s.evening) {
+    const now=new Date(), target=new Date(); target.setHours(21,0,0,0);
+    if (target>now) setTimeout(()=>{ try{new Notification('🌙 Az Én Napom',{body:'Ideje lezárni a napot! Mi volt a mai nap egy jó perce?',icon:'icon-192.png'});}catch(e){} }, target-now);
+  }
+}
+function getNotifSettings() { try{return JSON.parse(localStorage.getItem('adhd_notif_v1')||'{"transition":true,"tasks":false,"evening":false}');}catch(e){return{transition:true,tasks:false,evening:false};} }
+function saveNotifSettings() {
+  const s={transition:document.getElementById('notif-transition')?.checked||false,tasks:document.getElementById('notif-tasks')?.checked||false,evening:document.getElementById('notif-evening')?.checked||false};
+  try{localStorage.setItem('adhd_notif_v1',JSON.stringify(s));}catch(e){}
+}
+function loadNotifSettings() {
+  const s=getNotifSettings();
+  const t=document.getElementById('notif-transition'),k=document.getElementById('notif-tasks'),e=document.getElementById('notif-evening');
+  if(t)t.checked=s.transition; if(k)k.checked=s.tasks; if(e)e.checked=s.evening;
+  const status=document.getElementById('push-status'),btn=document.getElementById('push-enable-btn');
+  if('Notification' in window){
+    if(Notification.permission==='granted'){if(status)status.textContent='✅ Értesítések engedélyezve!';if(btn)btn.style.display='none';}
+    else if(Notification.permission==='denied'){if(status)status.textContent='❌ Értesítések megtagadva a böngészőben.';}
+  } else { if(status)status.textContent='⚠️ Ez a böngésző nem támogatja az értesítéseket.';if(btn)btn.style.display='none'; }
+}
+
+// ═══════════════════════════════════════
 // INIT FELADATOK
 // ═══════════════════════════════════════
 function initTasks() {
@@ -3430,6 +4155,11 @@ function unlockApp() {
   initDaySelector();
   initCalendar();
   renderBrainDumpList();
+  loadAlertSetting();
+  loadNotifSettings();
+  updateStreak();
+  renderEstHistory();
+  if (Notification.permission === 'granted') scheduleNotifications();
   // Fókusz kártya — ha hétköznap mód aktív
   setTimeout(() => renderFocusCard(), 100);
   // Onboarding csak első belépésnél
