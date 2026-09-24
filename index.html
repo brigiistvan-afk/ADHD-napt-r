@@ -451,7 +451,49 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 .lock-error.shake{animation:shake .4s ease;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .lock-footer{font-size:11px;color:#5A3E30;margin-top:24px;}
-/* ══ NAP-VÁLASZTÓ ══ */
+/* ══ FÓKUSZ KÁRTYA ══ */
+.focus-card{
+  background:linear-gradient(135deg,white,#FFF8F4);
+  border:2px solid var(--peach);
+  border-radius:18px;
+  padding:22px 20px;
+  margin-bottom:16px;
+  text-align:center;
+  transition:all .3s;
+}
+.focus-card.focus-active{border-color:var(--terracotta);box-shadow:0 4px 20px rgba(201,106,58,.12);}
+.focus-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);font-weight:600;margin-bottom:10px;}
+.focus-icon{font-size:40px;margin-bottom:8px;display:block;}
+.focus-title{font-family:'Fraunces',serif;font-weight:300;font-size:22px;color:var(--dark);line-height:1.2;margin-bottom:6px;}
+.focus-meta{font-size:13px;color:var(--mid);margin-bottom:20px;}
+.focus-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.focus-btn-start{padding:13px 28px;border-radius:30px;border:none;background:var(--terracotta);color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;}
+.focus-btn-start:hover{background:#A85020;transform:translateY(-1px);}
+.focus-btn-start.done-state{background:var(--sage);}
+.focus-btn-switch{padding:12px 18px;border-radius:30px;border:1.5px solid var(--peach);background:white;color:var(--mid);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;}
+.focus-btn-switch:hover{border-color:var(--lavender);color:var(--lavender);}
+.focus-all-done{color:var(--sage);font-family:'Fraunces',serif;font-weight:300;font-size:20px;}
+.focus-all-done p{font-size:13px;color:var(--mid);margin-top:6px;}
+
+/* Block picker */
+.block-picker{display:none;margin-top:14px;text-align:left;border-top:1px solid var(--peach);padding-top:14px;}
+.block-picker.open{display:block;}
+.block-pick-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s;margin-bottom:6px;border:1.5px solid transparent;}
+.block-pick-item:hover{background:var(--warm);border-color:var(--peach);}
+.block-pick-item.pick-active{background:#FFF0E8;border-color:var(--terracotta);}
+.block-pick-item.pick-done{opacity:.4;}
+.pick-icon{font-size:18px;flex-shrink:0;}
+.pick-body{flex:1;}
+.pick-title{font-size:13px;font-weight:500;color:var(--dark);}
+.pick-time{font-size:11px;color:var(--mid);}
+
+/* Teljes nap toggle */
+.full-day-toggle{text-align:center;margin-bottom:12px;}
+.full-day-btn{background:none;border:none;font-size:13px;color:var(--light);cursor:pointer;padding:6px 12px;border-radius:20px;transition:all .15s;font-family:'DM Sans',sans-serif;}
+.full-day-btn:hover{background:var(--warm);color:var(--mid);}
+.full-day-content{display:none;}
+.full-day-content.open{display:block;}
+</style>
 .day-selector{display:flex;gap:5px;margin-bottom:16px;background:var(--warm);border-radius:12px;padding:5px;}
 .day-sel-btn{flex:1;padding:8px 4px;border:none;border-radius:8px;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--mid);cursor:pointer;transition:all .15s;text-align:center;}
 .day-sel-btn.today{color:var(--terracotta);}
@@ -638,45 +680,63 @@ h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacin
 
   <!-- ══ HÉTKÖZNAP MÓD ══ -->
   <div id="mode-hetköznap" class="mode-section">
-    <div class="notice">⚡ <strong>ADHD-idő törvénye:</strong> Ha 30 percesnek érzed, adj rá 40-et. Kattints egy blokkra ha kész. ✏️ = szerkesztés.</div>
 
-    <!-- NAP-VÁLASZTÓ -->
-    <div class="day-selector" id="day-selector">
-      <button class="day-sel-btn" data-day="mon" onclick="selectRoutineDay('mon',this)">H</button>
-      <button class="day-sel-btn" data-day="tue" onclick="selectRoutineDay('tue',this)">K</button>
-      <button class="day-sel-btn" data-day="wed" onclick="selectRoutineDay('wed',this)">Sze</button>
-      <button class="day-sel-btn" data-day="thu" onclick="selectRoutineDay('thu',this)">Cs</button>
-      <button class="day-sel-btn" data-day="fri" onclick="selectRoutineDay('fri',this)">P</button>
-      <button class="day-sel-btn" data-day="sat" onclick="selectRoutineDay('sat',this)">Szo</button>
-      <button class="day-sel-btn" data-day="sun" onclick="selectRoutineDay('sun',this)">V</button>
+    <!-- FÓKUSZ KÁRTYA -->
+    <div class="focus-card" id="focus-card">
+      <div class="focus-label">Most következik</div>
+      <div id="focus-card-body">
+        <span class="focus-icon">⏳</span>
+        <div class="focus-title">Betöltés...</div>
+      </div>
+      <div class="block-picker" id="block-picker"></div>
     </div>
-    <div class="day-name-label" id="routine-day-label"></div>
 
-    <div class="section">
-      <div class="section-title">🌅 Reggel — az indulás rítusa</div>
-      <div class="time-grid" id="grid-reggel"></div>
-      <button class="add-slot-btn" onclick="openAddSlot('reggel')">＋ Új időblokk</button>
+    <!-- TELJES NAP TOGGLE -->
+    <div class="full-day-toggle">
+      <button class="full-day-btn" id="full-day-btn" onclick="toggleFullDay()">▼ Teljes nap mutatása</button>
     </div>
-    <div class="section">
-      <div class="section-title">💼 Munka — blokkokban, nem folyamatosan</div>
-      <div class="notice">🧠 <strong>25 perc munka → 5 perc szünet.</strong> Egy blokkban EGY feladat.</div>
-      <div class="time-grid" id="grid-munka"></div>
-      <button class="add-slot-btn" onclick="openAddSlot('munka')">＋ Új időblokk</button>
-    </div>
-    <div class="section">
-      <div class="section-title">🌤 Délután — gyerek + átmenet</div>
-      <div class="time-grid" id="grid-delutan"></div>
-      <button class="add-slot-btn" onclick="openAddSlot('delutan')">＋ Új időblokk</button>
-    </div>
-    <div class="section">
-      <div class="section-title">🌙 Este — lezárás és feltöltődés</div>
-      <div class="time-grid" id="grid-este"></div>
-      <button class="add-slot-btn" onclick="openAddSlot('este')">＋ Új időblokk</button>
-    </div>
-    <div class="section">
-      <div class="section-title">✅ Reggeli kilépő lista</div>
-      <div class="check-list" id="list-reggeli"></div>
-      <button class="add-check-btn" onclick="openAddCheck('reggeli')">＋ Új elem</button>
+
+    <div class="full-day-content" id="full-day-content">
+      <div class="notice">⚡ <strong>ADHD-idő törvénye:</strong> Ha 30 percesnek érzed, adj rá 40-et. Kattints egy blokkra ha kész. ✏️ = szerkesztés.</div>
+
+      <!-- NAP-VÁLASZTÓ -->
+      <div class="day-selector" id="day-selector">
+        <button class="day-sel-btn" data-day="mon" onclick="selectRoutineDay('mon',this)">H</button>
+        <button class="day-sel-btn" data-day="tue" onclick="selectRoutineDay('tue',this)">K</button>
+        <button class="day-sel-btn" data-day="wed" onclick="selectRoutineDay('wed',this)">Sze</button>
+        <button class="day-sel-btn" data-day="thu" onclick="selectRoutineDay('thu',this)">Cs</button>
+        <button class="day-sel-btn" data-day="fri" onclick="selectRoutineDay('fri',this)">P</button>
+        <button class="day-sel-btn" data-day="sat" onclick="selectRoutineDay('sat',this)">Szo</button>
+        <button class="day-sel-btn" data-day="sun" onclick="selectRoutineDay('sun',this)">V</button>
+      </div>
+      <div class="day-name-label" id="routine-day-label"></div>
+
+      <div class="section">
+        <div class="section-title">🌅 Reggel — az indulás rítusa</div>
+        <div class="time-grid" id="grid-reggel"></div>
+        <button class="add-slot-btn" onclick="openAddSlot('reggel')">＋ Új időblokk</button>
+      </div>
+      <div class="section">
+        <div class="section-title">💼 Munka — blokkokban, nem folyamatosan</div>
+        <div class="notice">🧠 <strong>25 perc munka → 5 perc szünet.</strong> Egy blokkban EGY feladat.</div>
+        <div class="time-grid" id="grid-munka"></div>
+        <button class="add-slot-btn" onclick="openAddSlot('munka')">＋ Új időblokk</button>
+      </div>
+      <div class="section">
+        <div class="section-title">🌤 Délután — gyerek + átmenet</div>
+        <div class="time-grid" id="grid-delutan"></div>
+        <button class="add-slot-btn" onclick="openAddSlot('delutan')">＋ Új időblokk</button>
+      </div>
+      <div class="section">
+        <div class="section-title">🌙 Este — lezárás és feltöltődés</div>
+        <div class="time-grid" id="grid-este"></div>
+        <button class="add-slot-btn" onclick="openAddSlot('este')">＋ Új időblokk</button>
+      </div>
+      <div class="section">
+        <div class="section-title">✅ Reggeli kilépő lista</div>
+        <div class="check-list" id="list-reggeli"></div>
+        <button class="add-check-btn" onclick="openAddCheck('reggeli')">＋ Új elem</button>
+      </div>
     </div>
   </div>
 
@@ -1370,6 +1430,199 @@ function initCalendar() {
   calYear  = new Date().getFullYear();
   calMonth = new Date().getMonth();
   renderCalendar();
+}
+
+// ═══════════════════════════════════════
+// FÓKUSZ KÁRTYA — lépésről lépésre
+// ═══════════════════════════════════════
+let focusPickerOpen = false;
+let manualFocusId   = null; // kézzel választott blokk id-je
+
+// Percbe konvertálás "14:30" → 870
+function timeToMins(timeStr) {
+  if (!timeStr || timeStr === '—') return null;
+  const parts = timeStr.replace('.', ':').split(':');
+  if (parts.length < 2) return null;
+  return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+}
+
+function nowMins() {
+  const n = new Date();
+  return n.getHours() * 60 + n.getMinutes();
+}
+
+// Összes blokk összegyűjtve időrendbe
+function getAllSlotsOrdered() {
+  const dayKey = getActiveRoutineDayKey ? getActiveRoutineDayKey() : getTodayDayKey();
+  const sections = ['reggel','munka','delutan','este'];
+  const all = [];
+  sections.forEach(section => {
+    const daySpecific = getDaySlotsForSection(dayKey, section);
+    const slots = daySpecific || (state.slots[section] || []);
+    slots.forEach(slot => {
+      all.push({ ...slot, section });
+    });
+  });
+  // Időrend szerint rendezés
+  all.sort((a, b) => {
+    const am = timeToMins(a.time);
+    const bm = timeToMins(b.time);
+    if (am === null && bm === null) return 0;
+    if (am === null) return 1;
+    if (bm === null) return -1;
+    return am - bm;
+  });
+  return all;
+}
+
+// Aktuális / következő blokk meghatározása
+function getCurrentFocusBlock() {
+  // Ha kézzel választottak, azt mutatjuk
+  if (manualFocusId) {
+    const all = getAllSlotsOrdered();
+    const found = all.find(s => s.id === manualFocusId);
+    if (found && !state.done[found.id]) return found;
+    manualFocusId = null; // ha ez már kész, visszaállunk auto módra
+  }
+
+  const all = getAllSlotsOrdered();
+  const now = nowMins();
+  const pending = all.filter(s => !state.done[s.id]);
+  if (pending.length === 0) return null;
+
+  // Megkeressük az időponthoz legközelebb eső elvégzetlent
+  let best = null;
+  let bestDiff = Infinity;
+
+  pending.forEach(slot => {
+    const m = timeToMins(slot.time);
+    if (m === null) {
+      // Nincs időpont — csak ha nincs jobb
+      if (best === null) best = slot;
+      return;
+    }
+    const diff = m - now;
+    // Preferáljuk amit már el kellett volna kezdeni (diff < 0 de nem régen)
+    // és a hamarosan kezdődőt (diff > 0)
+    const absDiff = Math.abs(diff);
+    if (absDiff < bestDiff) {
+      bestDiff = absDiff;
+      best = slot;
+    }
+  });
+
+  return best || pending[0];
+}
+
+function renderFocusCard() {
+  const card = document.getElementById('focus-card');
+  const body = document.getElementById('focus-card-body');
+  if (!card || !body) return;
+
+  const current = getCurrentFocusBlock();
+  const all = getAllSlotsOrdered();
+  const pending = all.filter(s => !state.done[s.id]);
+  const doneCount = all.length - pending.length;
+
+  if (!current) {
+    // Minden kész
+    card.classList.remove('focus-active');
+    body.innerHTML = `
+      <div class="focus-all-done">🌟 Ma minden kész!
+        <p>Elvégeztél ${doneCount} blokkot. Nem kis dolog.</p>
+      </div>`;
+    // Elrejtjük a picker-t
+    closePicker();
+    return;
+  }
+
+  card.classList.add('focus-active');
+  const mins = timeToMins(current.time);
+  const now  = nowMins();
+  let timeLabel = '';
+  if (mins !== null) {
+    if (mins <= now) timeLabel = `${current.time} · folyamatban`;
+    else {
+      const diff = mins - now;
+      timeLabel = diff < 60
+        ? `${current.time} · ${diff} perc múlva`
+        : `${current.time}`;
+    }
+  }
+  timeLabel += current.duration && current.duration !== '—' ? ` · ${current.duration}` : '';
+
+  const progressLabel = all.length > 0
+    ? `${doneCount} / ${all.length} elvégezve`
+    : '';
+
+  body.innerHTML = `
+    <span class="focus-icon">${current.icon}</span>
+    <div class="focus-title">${current.title}</div>
+    <div class="focus-meta">${timeLabel}${progressLabel ? ' &nbsp;·&nbsp; ' + progressLabel : ''}</div>
+    ${current.desc ? `<div style="font-size:12px;color:var(--light);margin-bottom:10px;">${current.desc}</div>` : ''}
+    <div class="focus-actions">
+      <button class="focus-btn-start" onclick="focusBlockDone('${current.id}','${current.section}')">✓ Kész!</button>
+      <button class="focus-btn-switch" onclick="toggleBlockPicker()">↕ Váltás</button>
+    </div>`;
+
+  // Picker frissítése
+  renderBlockPicker(all, current.id);
+}
+
+function renderBlockPicker(all, currentId) {
+  const picker = document.getElementById('block-picker');
+  if (!picker) return;
+  picker.innerHTML = `<div style="font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;font-weight:600;">Válassz másik blokkot</div>` +
+    all.map(slot => {
+      const done   = state.done[slot.id];
+      const active = slot.id === currentId;
+      return `<div class="block-pick-item ${active?'pick-active':''} ${done?'pick-done':''}"
+        onclick="selectFocusBlock('${slot.id}')">
+        <span class="pick-icon">${done ? '✓' : slot.icon}</span>
+        <div class="pick-body">
+          <div class="pick-title">${slot.title}</div>
+          <div class="pick-time">${slot.time !== '—' ? slot.time : ''} ${slot.duration !== '—' ? '· '+slot.duration : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+function toggleBlockPicker() {
+  const picker = document.getElementById('block-picker');
+  if (!picker) return;
+  focusPickerOpen = !focusPickerOpen;
+  picker.classList.toggle('open', focusPickerOpen);
+}
+
+function closePicker() {
+  focusPickerOpen = false;
+  const picker = document.getElementById('block-picker');
+  if (picker) picker.classList.remove('open');
+}
+
+function selectFocusBlock(id) {
+  manualFocusId = id;
+  closePicker();
+  renderFocusCard();
+}
+
+function focusBlockDone(id, section) {
+  state.done[id] = true;
+  saveState();
+  manualFocusId = null;
+  renderFocusCard();
+  updateProgress();
+  renderSlots(section);
+  // Kis visszajelzés
+  showToast('✓ Kész! Következő blokk...');
+}
+
+function toggleFullDay() {
+  const content = document.getElementById('full-day-content');
+  const btn     = document.getElementById('full-day-btn');
+  if (!content || !btn) return;
+  const isOpen = content.classList.toggle('open');
+  btn.textContent = isOpen ? '▲ Teljes nap elrejtése' : '▼ Teljes nap mutatása';
 }
 
 // ── RENDERALL KIEGÉSZÍTÉS ──
@@ -2680,6 +2933,7 @@ function applyDayMode(mode) {
   }
   if (mode === 'hetköznap') {
     renderAll();
+    renderFocusCard();
   }
 
   // Mindig: mai feladatok panel
@@ -3176,6 +3430,8 @@ function unlockApp() {
   initDaySelector();
   initCalendar();
   renderBrainDumpList();
+  // Fókusz kártya — ha hétköznap mód aktív
+  setTimeout(() => renderFocusCard(), 100);
   // Onboarding csak első belépésnél
   if (!isOnboarded()) {
     setTimeout(() => startOnboarding(), 400);
